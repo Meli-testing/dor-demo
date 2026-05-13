@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dor. — de gusturile românești</title>
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link href="https://fonts.bunny.net/css?family=nunito:400,600,700,800,900|nunito-sans:400,600,700" rel="stylesheet">
+<style>
+:root {
+  --green: #2d6b2a;
+  --green-dark: #1e4d1c;
+  --gold: #c4972a;
+  --black: #111111;
+  --gray: #555555;
+  --gray-light: #999999;
+  --border: #e8e8e8;
+  --bg-light: #f9f9f7;
+  --white: #ffffff;
+  --ro-blue: #002B7F;
+  --ro-yellow: #FCD116;
+  --ro-red: #CE1126;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito Sans', sans-serif; background: var(--white); color: var(--black); }
+
+.topbar {
+  background: var(--green-dark); color: rgba(255,255,255,0.75);
+  text-align: center; padding: 7px 1rem;
+  font-size: 0.72rem; letter-spacing: 1px;
+}
+.topbar strong { color: white; }
+
+/* NAV */
+nav {
+  background: var(--white); border-bottom: 1px solid var(--border);
+  padding: 0 2.5rem; position: sticky; top: 0; z-index: 500;
+}
+.nav-top { display: flex; align-items: center; gap: 1.5rem; height: 72px; }
+.logo { text-decoration: none; flex-shrink: 0; display: flex; flex-direction: column; }
+.logo-line1 { display: flex; align-items: baseline; gap: 2px; }
+.logo-text { font-family: 'Nunito', sans-serif; font-size: 2rem; font-weight: 900; color: var(--black); letter-spacing: -2px; line-height: 1; }
+.logo-dots { display: flex; gap: 2px; align-items: center; padding-bottom: 3px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; }
+.logo-sub { font-size: 0.6rem; color: var(--gray-light); font-weight: 600; letter-spacing: 0.3px; }
+.logo-sub em { font-style: italic; color: var(--gray); }
+
+.search-wrap { flex: 1; max-width: 500px; position: relative; }
+.search-wrap input {
+  width: 100%; padding: 0.6rem 2.5rem 0.6rem 1rem;
+  border: 1px solid var(--border); border-radius: 6px;
+  font-family: 'Nunito Sans', sans-serif; font-size: 0.88rem; color: var(--black);
+  outline: none; background: var(--bg-light); transition: border-color 0.2s;
+}
+.search-wrap input:focus { border-color: var(--green); }
+.search-wrap input::placeholder { color: var(--gray-light); }
+.search-btn { position: absolute; right: 0.7rem; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--gray); font-size: 1rem; }
+
+.nav-icons { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; }
+.nav-icon { display: flex; flex-direction: column; align-items: center; text-decoration: none; position: relative; color: var(--gray); transition: color 0.2s; }
+.nav-icon:hover { color: var(--green); }
+.nav-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.nav-icon-label { font-size: 0.6rem; font-weight: 700; margin-top: 2px; }
+.badge { position: absolute; top: -5px; right: -7px; background: var(--gold); color: white; font-size: 0.58rem; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.lang-toggle { display: flex; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.lang-btn { background: none; border: none; padding: 5px 11px; font-size: 0.72rem; font-weight: 700; cursor: pointer; font-family: 'Nunito Sans', sans-serif; color: var(--gray-light); transition: all 0.15s; }
+.lang-btn.active { background: var(--green); color: white; }
+
+.cat-nav { border-top: 1px solid var(--border); display: flex; overflow-x: auto; scrollbar-width: none; }
+.cat-nav::-webkit-scrollbar { display: none; }
+.cat-nav a { padding: 0.55rem 1.1rem; white-space: nowrap; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray); text-decoration: none; transition: color 0.2s; border-bottom: 2px solid transparent; flex-shrink: 0; }
+.cat-nav a:hover { color: var(--green); border-bottom-color: var(--green); }
+
+/* HERO */
+.hero {
+  position: relative; height: 560px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  background: linear-gradient(165deg, #0f2a0e 0%, #1e4d1c 35%, #2d6b2a 65%, #3a7a35 100%);
+}
+.hero-rows {
+  position: absolute; inset: 0; overflow: hidden;
+}
+.hero-rows::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(173deg, transparent, transparent 22px, rgba(0,0,0,0.07) 22px, rgba(0,0,0,0.07) 24px);
+}
+.hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.28); }
+.hero-content { position: relative; z-index: 1; padding: 2rem; }
+.hero h1 {
+  font-family: 'Nunito', sans-serif; font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 900; color: white; line-height: 1.1;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.5);
+}
+.hero-cta { margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-green { background: var(--green); color: white; text-decoration: none; padding: 0.75rem 2rem; font-size: 0.85rem; font-weight: 800; border-radius: 6px; transition: background 0.2s; display: inline-block; font-family: 'Nunito', sans-serif; border: 2px solid var(--green); }
+.btn-green:hover { background: var(--green-dark); border-color: var(--green-dark); }
+.btn-white { background: white; color: var(--green); text-decoration: none; padding: 0.75rem 2rem; font-size: 0.85rem; font-weight: 800; border-radius: 6px; border: 2px solid white; transition: all 0.2s; display: inline-block; font-family: 'Nunito', sans-serif; }
+.btn-white:hover { background: transparent; color: white; }
+
+/* SECTIONS */
+.section-wrap { padding: 4rem 3rem; max-width: 1400px; margin: 0 auto; }
+.section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+.section-title { font-family: 'Nunito', sans-serif; font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 800; color: var(--green); }
+.section-link { color: var(--gold); text-decoration: none; font-size: 0.8rem; font-weight: 700; border-bottom: 1.5px solid var(--gold); padding-bottom: 1px; transition: color 0.2s; white-space: nowrap; }
+.section-link:hover { color: var(--green); border-color: var(--green); }
+
+/* CATEGORY PHOTO CARDS */
+.cat-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 1.25rem; }
+.cat-photo-card { text-align: center; text-decoration: none; display: block; transition: transform 0.2s; }
+.cat-photo-card:hover { transform: translateY(-4px); }
+.cat-photo { width: 100%; aspect-ratio: 1; border-radius: 8px; margin-bottom: 0.6rem; object-fit: cover; background: var(--bg-light); display: block; }
+.cat-photo-name { font-size: 0.82rem; font-weight: 700; color: var(--black); line-height: 1.3; }
+
+/* PRODUCTS */
+.prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(235px, 1fr)); gap: 1.25rem; }
+.prod-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+.prod-card { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; position: relative; transition: box-shadow 0.2s, transform 0.2s; }
+.prod-card:hover { box-shadow: 0 6px 22px rgba(0,0,0,0.09); transform: translateY(-3px); }
+.ribbon { position: absolute; top: 0; left: 0; display: flex; height: 9px; width: 54px; border-radius: 12px 0 0 0; overflow: hidden; z-index: 2; }
+.rb { flex: 1; }
+.prod-img { height: 190px; overflow: hidden; background: var(--bg-light); }
+.prod-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.prod-body { padding: 1rem; }
+.prod-name { font-family: 'Nunito', sans-serif; font-size: 0.85rem; font-weight: 800; color: var(--black); text-transform: uppercase; margin-bottom: 0.75rem; line-height: 1.35; }
+.prod-footer { display: flex; justify-content: space-between; align-items: center; }
+.prod-price { font-family: 'Nunito', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--green); }
+.cart-btn { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--border); background: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; transition: all 0.2s; text-decoration: none; }
+.cart-btn:hover { background: var(--green); border-color: var(--green); }
+.view-all-pill { display: block; width: fit-content; margin: 1.5rem auto 2rem; font-size: 1rem; font-weight: 800; color: var(--gold); text-decoration: none; font-family: 'Nunito', sans-serif; transition: color 0.2s; }
+.view-all-pill:hover { color: var(--green); }
+
+/* WHY */
+.why-bg { background: var(--bg-light); }
+.why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.why-card { background: white; border-radius: 12px; padding: 1.75rem; border: 1px solid var(--border); }
+.why-icon { font-size: 1.75rem; margin-bottom: 0.7rem; }
+.why-title { font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; color: var(--green); margin-bottom: 0.5rem; }
+.why-text { font-size: 0.82rem; color: var(--gray); line-height: 1.75; }
+
+/* FOOTER */
+footer { background: var(--white); color: var(--black); padding: 3rem 3rem 0; border-top: 1px solid var(--border); }
+.footer-inner { max-width: 1400px; margin: 0 auto; }
+.f-top { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+.f-contact { display: flex; flex-direction: column; gap: 0.75rem; }
+.f-contact-label { font-size: 0.75rem; font-weight: 800; color: var(--gold); letter-spacing: 0.5px; text-transform: uppercase; }
+.f-contact-val { font-size: 0.88rem; color: var(--gray); }
+.f-phone { display: inline-block; border: 1px solid var(--border); border-radius: 6px; padding: 0.4rem 1rem; font-size: 0.85rem; color: var(--green); font-weight: 700; text-decoration: none; transition: border-color 0.2s; }
+.f-phone:hover { border-color: var(--green); }
+.f-social-row { display: flex; gap: 0.75rem; margin-top: 0.25rem; }
+.f-social { width: 32px; height: 32px; border: 1px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; text-decoration: none; transition: border-color 0.2s; color: var(--gray); }
+.f-social:hover { border-color: var(--green); color: var(--green); }
+.f-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
+.f-logo { display: flex; align-items: baseline; gap: 2px; }
+.f-logo-text { font-family: 'Nunito', sans-serif; font-size: 2rem; font-weight: 900; color: var(--black); letter-spacing: -1.5px; }
+.f-logo-dots { display: flex; gap: 2px; align-items: center; }
+.f-logo-sub { font-size: 0.68rem; color: var(--gray-light); font-style: italic; }
+.f-email { font-size: 0.85rem; font-weight: 700; color: var(--gold); }
+.f-hours { font-size: 0.78rem; color: var(--gray-light); text-align: right; line-height: 1.6; }
+.f-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+.f-col h4 { font-size: 0.8rem; font-weight: 800; color: var(--gold); margin-bottom: 1rem; }
+.f-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.f-col a { color: var(--gray); text-decoration: none; font-size: 0.84rem; transition: color 0.2s; }
+.f-col a:hover { color: var(--green); }
+.f-payment { font-size: 0.75rem; font-weight: 800; color: var(--gold); margin-bottom: 0.5rem; }
+.f-bottom { text-align: center; font-size: 0.72rem; color: var(--gray-light); padding: 1.25rem 0; }
+
+/* CHATBOT */
+.chat-btn { position: fixed; bottom: 1.75rem; right: 1.75rem; z-index: 1000; width: 54px; height: 54px; background: var(--green); color: white; border: none; border-radius: 50%; font-size: 1.35rem; cursor: pointer; box-shadow: 0 4px 18px rgba(45,107,42,0.5); display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+.chat-btn:hover { transform: scale(1.08); }
+.chat-window { position: fixed; bottom: 5rem; right: 1.75rem; z-index: 1000; width: 345px; max-height: 500px; background: white; border: 1px solid var(--border); border-radius: 14px; box-shadow: 0 16px 50px rgba(0,0,0,0.13); display: flex; flex-direction: column; overflow: hidden; transform: scale(0.88) translateY(12px); opacity: 0; pointer-events: none; transition: all 0.26s cubic-bezier(0.34,1.56,0.64,1); }
+.chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+.chat-head { background: var(--green); color: white; padding: 0.85rem 1.1rem; display: flex; align-items: center; gap: 0.65rem; }
+.chat-av { width: 34px; height: 34px; background: rgba(255,255,255,0.18); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.chat-head h4 { font-size: 0.88rem; font-weight: 800; font-family: 'Nunito', sans-serif; }
+.chat-head span { font-size: 0.65rem; opacity: 0.7; }
+.chat-msgs { flex: 1; overflow-y: auto; padding: 0.85rem; display: flex; flex-direction: column; gap: 0.55rem; background: var(--bg-light); }
+.msg { max-width: 87%; padding: 0.62rem 0.88rem; border-radius: 14px; font-size: 0.84rem; line-height: 1.55; }
+.msg.bot { background: white; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; color: var(--black); }
+.msg.user { background: var(--green); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+.chat-foot { padding: 0.6rem; border-top: 1px solid var(--border); display: flex; gap: 0.45rem; background: white; }
+.chat-inp { flex: 1; border: 1.5px solid var(--border); border-radius: 20px; padding: 0.5rem 0.85rem; font-family: 'Nunito Sans', sans-serif; font-size: 0.84rem; outline: none; color: var(--black); background: var(--bg-light); }
+.chat-inp:focus { border-color: var(--green); }
+.chat-send { background: var(--green); color: white; border: none; width: 33px; height: 33px; border-radius: 50%; cursor: pointer; font-size: 0.88rem; transition: background 0.2s; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.chat-send:hover { background: var(--green-dark); }
+.typing-dots { display: flex; gap: 3px; padding: 0.62rem 0.88rem; }
+.typing-dots span { width: 6px; height: 6px; background: #ccc; border-radius: 50%; animation: blink 1.2s infinite; }
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink { 0%,80%,100% { transform:translateY(0);opacity:0.4; } 40% { transform:translateY(-5px);opacity:1; } }
+
+@media (max-width: 860px) {
+  nav { padding: 0 1.25rem; }
+  .cat-nav { display: none; }
+  .hero { height: 400px; }
+  .section-wrap { padding: 3rem 1.5rem; }
+  .f-grid { grid-template-columns: 1fr; gap: 2rem; }
+  footer { padding: 3rem 1.5rem 2rem; }
+  .chat-window { width: calc(100vw - 2.5rem); right: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <strong data-ro="Livrare gratuită" data-en="Free delivery">Livrare gratuită</strong>
+  <span data-ro=" pentru comenzi peste 200 lei · 100% produse românești verificate" data-en=" for orders over 200 lei · 100% verified Romanian products"> pentru comenzi peste 200 lei · 100% produse românești verificate</span>
+</div>
+
+<nav>
+  <div class="nav-top">
+    <a href="#" class="logo">
+      <div class="logo-line1">
+        <span class="logo-text">dor</span>
+        <div class="logo-dots">
+          <div class="dot" style="background:var(--ro-blue)"></div>
+          <div class="dot" style="background:var(--ro-yellow)"></div>
+          <div class="dot" style="background:var(--ro-red)"></div>
+        </div>
+      </div>
+      <span class="logo-sub">de gusturile <em>românești</em></span>
+    </a>
+
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="Căutați produse...">
+      <button class="search-btn">🔍</button>
+    </div>
+
+    <div class="nav-icons">
+      <a href="https://dordegusturi.ro/my-account/" target="_blank" class="nav-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span class="nav-icon-label" data-ro="Contul meu" data-en="Account">Contul meu</span>
+      </a>
+      <a href="https://dordegusturi.ro/wishlist/WOOSW" target="_blank" class="nav-icon">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <div class="badge">1</div>
+        <span class="nav-icon-label" data-ro="Favorite" data-en="Wishlist">Favorite</span>
+      </a>
+      <a href="https://dordegusturi.ro/cart/" target="_blank" class="nav-icon">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <div class="badge" style="background:var(--gold)">0</div>
+        <span class="nav-icon-label" data-ro="Coș" data-en="Cart">Coș</span>
+      </a>
+      <div class="lang-toggle">
+        <button class="lang-btn active" id="btn-ro" onclick="setLang('ro')">RO</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-nav">
+    <a href="https://dordegusturi.ro/product-category/camara/" target="_blank" data-ro="Cămară" data-en="Pantry">Cămară</a>
+    <a href="https://dordegusturi.ro/product-category/lactate-si-oua/" target="_blank" data-ro="Lactate & Ouă" data-en="Dairy & Eggs">Lactate & Ouă</a>
+    <a href="https://dordegusturi.ro/product-category/carne-si-peste/" target="_blank" data-ro="Carne & Pește" data-en="Meat & Fish">Carne & Pește</a>
+    <a href="https://dordegusturi.ro/product-category/ceai/" target="_blank" data-ro="Ceai" data-en="Tea">Ceai</a>
+    <a href="https://dordegusturi.ro/product-category/condimente/" target="_blank" data-ro="Condimente" data-en="Spices">Condimente</a>
+    <a href="https://dordegusturi.ro/product-category/dulciuri/" target="_blank" data-ro="Dulciuri" data-en="Sweets">Dulciuri</a>
+    <a href="https://dordegusturi.ro/product-category/produse-de-panificatie/" target="_blank" data-ro="Panificație" data-en="Bakery">Panificație</a>
+    <a href="https://dordegusturi.ro/product-category/sucuri-si-siropuri/" target="_blank" data-ro="Sucuri & Siropuri" data-en="Juices">Sucuri & Siropuri</a>
+    <a href="https://dordegusturi.ro/product-category/produse-apicole/" target="_blank" data-ro="Produse Apicole" data-en="Bee Products">Produse Apicole</a>
+    <a href="https://dordegusturi.ro/product-category/bauturi-alcoolice/" target="_blank" data-ro="Băuturi Alcoolice" data-en="Drinks">Băuturi Alcoolice</a>
+    <a href="https://dordegusturi.ro/product-category/legume/" target="_blank" data-ro="Legume" data-en="Vegetables">Legume</a>
+    <a href="https://dordegusturi.ro/product-category/fructe/" target="_blank" data-ro="Fructe" data-en="Fruits">Fructe</a>
+    <a href="https://dordegusturi.ro/product-category/produse-vegane/" target="_blank" data-ro="Vegane" data-en="Vegan">Vegane</a>
+    <a href="https://dordegusturi.ro/product-category/suplimente/" target="_blank" data-ro="Suplimente" data-en="Supplements">Suplimente</a>
+    <a href="https://dordegusturi.ro/product-category/cosmetice/" target="_blank" data-ro="Cosmetice" data-en="Cosmetics">Cosmetice</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-rows"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 data-ro="Gusturi românești,<br>cu dor și drag din natură" data-en="Romanian flavors,<br>with love straight from nature">Gusturi românești,<br>cu dor și drag din natură</h1>
+    <div class="hero-cta">
+      <a href="https://dordegusturi.ro/shop" target="_blank" class="btn-white" data-ro="Către magazin" data-en="Go to shop">Către magazin</a>
+      <a href="#categorii" class="btn-green" data-ro="Vezi categorii" data-en="See categories">Vezi categorii</a>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<div id="categorii" class="section-wrap">
+  <div class="section-head">
+    <h2 class="section-title" data-ro="Bunătăți alese, direct din inima României" data-en="Chosen goodness, from the heart of Romania">Bunătăți alese, direct din inima României</h2>
+    <a href="https://dordegusturi.ro/shop" target="_blank" class="section-link" data-ro="Vezi toate →" data-en="See all →">Vezi toate →</a>
+  </div>
+  <div class="cat-cards">
+    <a href="https://dordegusturi.ro/product-category/produse-de-panificatie/" target="_blank" class="cat-photo-card"><img class="cat-photo" src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?w=300&h=300&fit=crop" alt="Panificatie" loading="lazy"><div class="cat-photo-name" data-ro="Produse de panificatie" data-en="Bakery">Produse de panificatie</div></a>
+    <a href="https://dordegusturi.ro/product-category/sucuri-si-siropuri/" target="_blank" class="cat-photo-card"><img class="cat-photo" src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=300&h=300&fit=crop" alt="Sucuri" loading="lazy"><div class="cat-photo-name" data-ro="Sucuri si siropuri" data-en="Juices & syrups">Sucuri si siropuri</div></a>
+    <a href="https://dordegusturi.ro/product-category/produse-apicole/" target="_blank" class="cat-photo-card"><img class="cat-photo" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=300&fit=crop" alt="Miere" loading="lazy"><div class="cat-photo-name" data-ro="Produse apicole" data-en="Bee products">Produse apicole</div></a>
+    <a href="https://dordegusturi.ro/product-category/produse-igiena-si-ingrijire-personala/" target="_blank" class="cat-photo-card"><img class="cat-photo" src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=300&h=300&fit=crop" alt="Igiena" loading="lazy"><div class="cat-photo-name" data-ro="Produse de igiena si ingrijire" data-en="Hygiene & care">Produse de igiena</div></a>
+    <a href="https://dordegusturi.ro/product-category/camara/" target="_blank" class="cat-photo-card"><img class="cat-photo" src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=300&h=300&fit=crop" alt="Camara" loading="lazy"><div class="cat-photo-name" data-ro="Camara" data-en="Pantry">Camara</div></a>
+    <a href="https://dordegusturi.ro/product-category/lactate-si-oua/" target="_blank" class="cat-photo-card"><img class="cat-photo" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=300&h=300&fit=crop" alt="Lactate" loading="lazy"><div class="cat-photo-name" data-ro="Lactate si oua" data-en="Dairy & eggs">Lactate si oua</div></a>
+    <a href="https://dordegusturi.ro/product-category/carne-si-peste/" target="_blank" class="cat-photo-card"><img class="cat-photo" src="https://images.unsplash.com/photo-1529693662653-9d480530a697?w=300&h=300&fit=crop" alt="Carne" loading="lazy"><div class="cat-photo-name" data-ro="Carne si peste" data-en="Meat & fish">Carne si peste</div></a>
+    <a href="https://dordegusturi.ro/product-category/condimente/" target="_blank" class="cat-photo-card"><img class="cat-photo" src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&h=300&fit=crop" alt="Condimente" loading="lazy"><div class="cat-photo-name" data-ro="Condimente" data-en="Spices">Condimente</div></a>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="section-wrap" style="padding-top:0;">
+  <div class="section-head">
+    <h2 class="section-title" data-ro="Produsele preferate de voi" data-en="Your favorite products">Produsele preferate de voi</h2>
+  </div>
+  <div style="text-align:center; margin-bottom:2rem;">
+    <a href="https://dordegusturi.ro/shop" target="_blank" class="view-all-pill" data-ro="Toate produsele" data-en="All products">Toate produsele</a>
+  </div>
+  <div class="prod-grid">
+
+    <div class="prod-card">
+      <div class="ribbon"><div class="rb" style="background:var(--ro-blue)"></div><div class="rb" style="background:var(--ro-yellow)"></div><div class="rb" style="background:var(--ro-red)"></div></div>
+      <div class="prod-img"><img src="https://images.unsplash.com/photo-1604503468506-a8da13d11560?w=400&h=300&fit=crop" alt="Pui" loading="lazy"></div>
+      <div class="prod-body">
+        <div class="prod-label" data-ro="Carne si peste" data-en="Meat & fish">Carne si peste</div>
+        <div class="prod-name" data-ro="Pachet pulpe si piept pui ferma din curte 100gr" data-en="Farm chicken pack 100g">Pachet pulpe si piept pui ferma din curte 100gr</div>
+        <div class="prod-footer"><span class="prod-price">8,00 lei</span><a href="https://dordegusturi.ro/shop" target="_blank" class="cart-btn">🛒</a></div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="ribbon"><div class="rb" style="background:var(--ro-blue)"></div><div class="rb" style="background:var(--ro-yellow)"></div><div class="rb" style="background:var(--ro-red)"></div></div>
+      <div class="prod-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop" alt="Miere" loading="lazy"></div>
+      <div class="prod-body">
+        <div class="prod-label" data-ro="Produse apicole" data-en="Bee products">Produse apicole</div>
+        <div class="prod-name" data-ro="Miere salcam cu gutui 270gr" data-en="Acacia honey with quince 270g">Miere salcam cu gutui 270gr</div>
+        <div class="prod-footer"><span class="prod-price">45,00 lei</span><a href="https://dordegusturi.ro/shop" target="_blank" class="cart-btn">🛒</a></div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="ribbon"><div class="rb" style="background:var(--ro-blue)"></div><div class="rb" style="background:var(--ro-yellow)"></div><div class="rb" style="background:var(--ro-red)"></div></div>
+      <div class="prod-img"><img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop" alt="Suplimente" loading="lazy"></div>
+      <div class="prod-body">
+        <div class="prod-label" data-ro="Suplimente" data-en="Supplements">Suplimente</div>
+        <div class="prod-name" data-ro="Capsule Armurariu – Dimitrie Monahul" data-en="Milk thistle capsules">Capsule Armurariu – Dimitrie Monahul</div>
+        <div class="prod-footer"><span class="prod-price">63,00 lei</span><a href="https://dordegusturi.ro/shop" target="_blank" class="cart-btn">🛒</a></div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="ribbon"><div class="rb" style="background:var(--ro-blue)"></div><div class="rb" style="background:var(--ro-yellow)"></div><div class="rb" style="background:var(--ro-red)"></div></div>
+      <div class="prod-img"><img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400&h=300&fit=crop" alt="Ulei" loading="lazy"></div>
+      <div class="prod-body">
+        <div class="prod-label" data-ro="Camara" data-en="Pantry">Camara</div>
+        <div class="prod-name" data-ro="Ulei de floarea soarelui 1L Simis" data-en="Sunflower oil 1L Simis">Ulei de floarea soarelui 1L Simis</div>
+        <div class="prod-footer"><span class="prod-price">22,00 lei</span><a href="https://dordegusturi.ro/shop" target="_blank" class="cart-btn">🛒</a></div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="ribbon"><div class="rb" style="background:var(--ro-blue)"></div><div class="rb" style="background:var(--ro-yellow)"></div><div class="rb" style="background:var(--ro-red)"></div></div>
+      <div class="prod-img"><img src="https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400&h=300&fit=crop" alt="Branza" loading="lazy"></div>
+      <div class="prod-body">
+        <div class="prod-label" data-ro="Lactate si oua" data-en="Dairy & eggs">Lactate si oua</div>
+        <div class="prod-name" data-ro="Brânză de burduf tradițională 300g" data-en="Traditional burduf cheese 300g">Brânză de burduf tradițională 300g</div>
+        <div class="prod-footer"><span class="prod-price">35,00 lei</span><a href="https://dordegusturi.ro/shop" target="_blank" class="cart-btn">🛒</a></div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="ribbon"><div class="rb" style="background:var(--ro-blue)"></div><div class="rb" style="background:var(--ro-yellow)"></div><div class="rb" style="background:var(--ro-red)"></div></div>
+      <div class="prod-img"><img src="https://images.unsplash.com/photo-1585325701956-60dd9c8399f0?w=400&h=300&fit=crop" alt="Carnati" loading="lazy"></div>
+      <div class="prod-body">
+        <div class="prod-label" data-ro="Carne si peste" data-en="Meat & fish">Carne si peste</div>
+        <div class="prod-name" data-ro="Cârnați de casă afumați 300g" data-en="Smoked homemade sausages 300g">Cârnați de casă afumați 300g</div>
+        <div class="prod-footer"><span class="prod-price">42,00 lei</span><a href="https://dordegusturi.ro/shop" target="_blank" class="cart-btn">🛒</a></div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="ribbon"><div class="rb" style="background:var(--ro-blue)"></div><div class="rb" style="background:var(--ro-yellow)"></div><div class="rb" style="background:var(--ro-red)"></div></div>
+      <div class="prod-img"><img src="https://images.unsplash.com/photo-1569919659476-f0852f6834b7?w=400&h=300&fit=crop" alt="Tuica" loading="lazy"></div>
+      <div class="prod-body">
+        <div class="prod-label" data-ro="Bauturi alcoolice" data-en="Drinks">Bauturi alcoolice</div>
+        <div class="prod-name" data-ro="Țuică de prune naturală 500ml" data-en="Natural plum brandy 500ml">Țuică de prune naturală 500ml</div>
+        <div class="prod-footer"><span class="prod-price">65,00 lei</span><a href="https://dordegusturi.ro/shop" target="_blank" class="cart-btn">🛒</a></div>
+      </div>
+    </div>
+
+    <div class="prod-card">
+      <div class="ribbon"><div class="rb" style="background:var(--ro-blue)"></div><div class="rb" style="background:var(--ro-yellow)"></div><div class="rb" style="background:var(--ro-red)"></div></div>
+      <div class="prod-img"><img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400&h=300&fit=crop" alt="Ceai" loading="lazy"></div>
+      <div class="prod-body">
+        <div class="prod-label" data-ro="Ceai" data-en="Tea">Ceai</div>
+        <div class="prod-name" data-ro="Ceai de mușețel românesc 50g" data-en="Romanian chamomile tea 50g">Ceai de mușețel românesc 50g</div>
+        <div class="prod-footer"><span class="prod-price">12,00 lei</span><a href="https://dordegusturi.ro/shop" target="_blank" class="cart-btn">🛒</a></div>
+      </div>
+    </div>
+
+  </div>
+  <a href="https://dordegusturi.ro/shop" target="_blank" class="view-all-pill" data-ro="Toate produsele" data-en="All products">Toate produsele</a>
+</div>
+
+<!-- WHY -->
+<div class="why-bg">
+  <div class="section-wrap">
+    <h2 class="section-title" data-ro="De ce dor.?" data-en="Why dor.?">De ce dor.?</h2>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-icon">🌾</div><div class="why-title" data-ro="Direct de la fermieri" data-en="From farmers">Direct de la fermieri</div><div class="why-text" data-ro="Fără intermediari. Colaborăm direct cu producătorii locali." data-en="No middlemen. We work directly with local producers.">Fără intermediari. Colaborăm direct cu producătorii locali.</div></div>
+      <div class="why-card"><div class="why-icon">✅</div><div class="why-title" data-ro="Origine verificată" data-en="Verified origin">Origine verificată</div><div class="why-text" data-ro="100% românesc — ingrediente, nu doar compania." data-en="100% Romanian — ingredients, not just the company.">100% românesc — ingrediente, nu doar compania.</div></div>
+      <div class="why-card"><div class="why-icon">🌿</div><div class="why-title" data-ro="Natural și proaspăt" data-en="Natural & fresh">Natural și proaspăt</div><div class="why-text" data-ro="Fără conservanți artificiali. Gustul care te întoarce în copilărie." data-en="No artificial preservatives. The taste of your childhood.">Fără conservanți artificiali. Gustul care te întoarce în copilărie.</div></div>
+      <div class="why-card"><div class="why-icon">🏪</div><div class="why-title" data-ro="Rețea națională" data-en="National network">Rețea națională</div><div class="why-text" data-ro="100 magazine în 2026. Gusturile românești, cât mai aproape de tine." data-en="100 stores in 2026. Romanian flavors closer to you.">100 magazine în 2026. Gusturile românești, cât mai aproape de tine.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+
+    <!-- TOP ROW: contact left, logo+email right -->
+    <div class="f-top">
+      <div class="f-contact">
+        <div>
+          <div class="f-contact-label" data-ro="Locatie" data-en="Location">Locatie</div>
+          <div class="f-contact-val">Calea Bucuresti 54, Brasov</div>
+        </div>
+        <a href="tel:+40768100600" class="f-phone">0768 100 600</a>
+        <div>
+          <div class="f-contact-label" data-ro="Follow us" data-en="Follow us">Follow us</div>
+          <div class="f-social-row">
+            <a href="https://facebook.com" target="_blank" class="f-social">f</a>
+            <a href="https://tiktok.com" target="_blank" class="f-social">♪</a>
+            <a href="https://instagram.com" target="_blank" class="f-social">◎</a>
+          </div>
+        </div>
+      </div>
+      <div class="f-right">
+        <div class="f-logo">
+          <span class="f-logo-text">dor</span>
+          <div class="f-logo-dots">
+            <div class="dot" style="background:var(--ro-blue)"></div>
+            <div class="dot" style="background:var(--ro-yellow)"></div>
+            <div class="dot" style="background:var(--ro-red)"></div>
+          </div>
+        </div>
+        <div class="f-logo-sub">de gusturile <em>românești</em></div>
+        <div class="f-email">contact.unirea@gmail.com</div>
+        <div class="f-hours">Luni – Sambata: 9:00 – 19:00<br>Duminica: 10:00 am – 16:00</div>
+        <div>
+          <div class="f-payment" data-ro="Metode de plata" data-en="Payment methods">Metode de plata</div>
+          <div style="font-size:0.75rem; color:var(--gray-light);">Netopia · Mastercard · Visa</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LINKS GRID -->
+    <div class="f-grid">
+      <div class="f-col">
+        <h4>GDPR</h4>
+        <ul>
+          <li><a href="https://dordegusturi.ro" target="_blank" data-ro="Termeni si conditii" data-en="Terms & conditions">Termeni si conditii</a></li>
+          <li><a href="https://dordegusturi.ro" target="_blank" data-ro="Politica de confidentialitate" data-en="Privacy policy">Politica de confidentialitate</a></li>
+          <li><a href="https://dordegusturi.ro" target="_blank" data-ro="Politica de cookie" data-en="Cookie policy">Politica de cookie</a></li>
+          <li><a href="https://dordegusturi.ro" target="_blank" data-ro="Politica de livrare" data-en="Delivery policy">Politica de livrare</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4 data-ro="Cont" data-en="Account">Cont</h4>
+        <ul>
+          <li><a href="https://dordegusturi.ro/my-account/" target="_blank" data-ro="Contul Meu" data-en="My Account">Contul Meu</a></li>
+          <li><a href="https://dordegusturi.ro/cart/" target="_blank" data-ro="Cosul de cumparaturi" data-en="Shopping Cart">Cosul de cumparaturi</a></li>
+          <li><a href="https://dordegusturi.ro/shop" target="_blank" data-ro="Magazin Online" data-en="Online Shop">Magazin Online</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h4 data-ro="Utile" data-en="Useful">Utile</h4>
+        <ul>
+          <li><a href="https://dordegusturi.ro/my-account/" target="_blank" data-ro="Contul meu" data-en="My account">Contul meu</a></li>
+          <li><a href="https://dordegusturi.ro" target="_blank" data-ro="Informatii" data-en="Info">Informatii</a></li>
+          <li><a href="https://dordegusturi.ro" target="_blank" data-ro="Adresele mele" data-en="My addresses">Adresele mele</a></li>
+          <li><a href="https://dordegusturi.ro" target="_blank" data-ro="Istoric comenzi" data-en="Order history">Istoric comenzi</a></li>
+          <li><a href="https://dordegusturi.ro" target="_blank" data-ro="Orders Tracking" data-en="Orders Tracking">Orders Tracking</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="f-bottom">Copyright © 2025 DOR. <span data-ro="Toate drepturile rezervate." data-en="All rights reserved.">Toate drepturile rezervate.</span></div>
+  </div>
+</footer>
+
+<!-- CHATBOT -->
+<button class="chat-btn" id="chatBtn" onclick="toggleChat()">💬</button>
+<div class="chat-window" id="chatWin">
+  <div class="chat-head">
+    <div class="chat-av">🌾</div>
+    <div>
+      <h4>Asistent dor.</h4>
+      <span data-ro="Online acum" data-en="Online now">Online acum</span>
+    </div>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="msg bot" id="welcomeMsg">Bună ziua! 👋 Sunt asistentul dor. Vă pot ajuta să găsiți produse românești sau să aflați mai multe. Cum vă pot ajuta?</div>
+  </div>
+  <div class="chat-foot">
+    <input class="chat-inp" id="chatInp" type="text" placeholder="Scrieți un mesaj..." onkeydown="if(event.key==='Enter') sendMsg()">
+    <button class="chat-send" onclick="sendMsg()">➤</button>
+  </div>
+</div>
+
+<script>
+let lang='ro', chatOpen=false, history=[];
+const sys={
+  ro:`Ești asistentul virtual al magazinului dor. — de gusturile românești. Vindem produse tradiționale românești 100% autentice, direct de la fermieri. Categorii: Cămară (86), Lactate & Ouă (41), Carne & Pește (42), Ceai (26), Condimente (54), Dulciuri (31), Panificație (42), Sucuri & Siropuri (48), Produse Apicole (28), Băuturi Alcoolice, Apă, Legume, Fructe, Vegane, Suplimente, Igienă, Cosmetice. Site: dordegusturi.ro. Magazin fizic: Brașov, Bulevardul Calea București 54. Răspunzi în română sau engleză după cum scrie clientul. Ești cald, prietenos, pasionat de produsele românești. Max 3-4 propoziții.`,
+  en:`You are the virtual assistant of dor. — de gusturile românești (Romanian flavors). We sell 100% authentic traditional Romanian products directly from local farmers. Categories: Pantry (86), Dairy & Eggs (41), Meat & Fish (42), Tea (26), Spices (54), Sweets (31), Bakery (42), Juices & Syrups (48), Bee Products (28), Drinks, Water, Vegetables, Fruits, Vegan, Supplements, Hygiene, Cosmetics. Website: dordegusturi.ro. Physical store: Brașov, Bulevardul Calea București 54. Reply in the customer's language. Warm, friendly, passionate about Romanian food. Max 3-4 sentences.`
+};
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-ro').classList.toggle('active',l==='ro');
+  document.getElementById('btn-en').classList.toggle('active',l==='en');
+  document.querySelectorAll('[data-ro]').forEach(el=>{const v=el.getAttribute('data-'+l);if(v)el.textContent=v;});
+  document.getElementById('searchInput').placeholder=l==='ro'?'Căutați produse...':'Search products...';
+  document.getElementById('chatInp').placeholder=l==='ro'?'Scrieți un mesaj...':'Type a message...';
+  const wm=document.getElementById('welcomeMsg');
+  if(wm)wm.textContent=l==='ro'?"Bună ziua! 👋 Sunt asistentul dor. Vă pot ajuta să găsiți produse românești. Cum vă pot ajuta?":"Hello! 👋 I'm the dor. assistant. I can help you find Romanian products. How can I help?";
+}
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chatWin').classList.toggle('open',chatOpen);
+  document.getElementById('chatBtn').textContent=chatOpen?'✕':'💬';
+}
+async function sendMsg(){
+  const inp=document.getElementById('chatInp');
+  const txt=inp.value.trim();if(!txt)return;
+  inp.value='';addMsg(txt,'user');history.push({role:'user',content:txt});
+  const dot=document.createElement('div');dot.className='msg bot typing-dots';dot.id='dots';
+  dot.innerHTML='<span></span><span></span><span></span>';
+  document.getElementById('chatMsgs').appendChild(dot);scrollMsgs();
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys[lang],messages:history})});
+    const data=await res.json();const reply=data.content[0].text;
+    history.push({role:'assistant',content:reply});
+    document.getElementById('dots')?.remove();addMsg(reply,'bot');
+  }catch{document.getElementById('dots')?.remove();addMsg(lang==='ro'?'Eroare. Încercați din nou.':'Error. Please try again.','bot');}
+}
+function addMsg(t,type){const d=document.createElement('div');d.className='msg '+type;d.textContent=t;document.getElementById('chatMsgs').appendChild(d);scrollMsgs();}
+function scrollMsgs(){const m=document.getElementById('chatMsgs');m.scrollTop=m.scrollHeight;}
+</script>
+</body>
+</html>
