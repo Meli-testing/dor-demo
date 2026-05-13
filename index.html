@@ -107,14 +107,18 @@ nav {
 .section-link:hover { color: var(--green); border-color: var(--green); }
 
 /* CATEGORY PHOTO CARDS */
-.cat-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 1.25rem; }
+.cat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+@media (max-width: 860px) { .cat-cards { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 500px) { .cat-cards { grid-template-columns: repeat(2, 1fr); } }
 .cat-photo-card { text-align: center; text-decoration: none; display: block; transition: transform 0.2s; }
 .cat-photo-card:hover { transform: translateY(-4px); }
 .cat-photo { width: 100%; aspect-ratio: 1; border-radius: 8px; margin-bottom: 0.6rem; object-fit: cover; background: var(--bg-light); display: block; }
 .cat-photo-name { font-size: 0.82rem; font-weight: 700; color: var(--black); line-height: 1.3; }
 
 /* PRODUCTS */
-.prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(235px, 1fr)); gap: 1.25rem; }
+.prod-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+@media (max-width: 1024px) { .prod-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 700px) { .prod-grid { grid-template-columns: repeat(2, 1fr); } }
 .prod-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
 .prod-card { background: white; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; position: relative; transition: box-shadow 0.2s, transform 0.2s; }
 .prod-card:hover { box-shadow: 0 6px 22px rgba(0,0,0,0.09); transform: translateY(-3px); }
