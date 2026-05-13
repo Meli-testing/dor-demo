@@ -482,17 +482,29 @@ footer { background: var(--white); color: var(--black); padding: 3rem 3rem 0; bo
 </footer>
 
 <!-- CHATBOT -->
+<style>
+.quick-btns{display:flex;flex-wrap:wrap;gap:6px;padding:0.5rem 0.85rem 0.6rem;}
+.qbtn{background:white;border:1.5px solid var(--green);color:var(--green);border-radius:20px;padding:5px 12px;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:'Nunito Sans',sans-serif;transition:all 0.15s;}
+.qbtn:hover{background:var(--green);color:white;}
+</style>
+
 <button class="chat-btn" id="chatBtn" onclick="toggleChat()">💬</button>
 <div class="chat-window" id="chatWin">
   <div class="chat-head">
     <div class="chat-av">🌾</div>
     <div>
-      <h4>Asistent dor.</h4>
+      <h4>DOR.</h4>
       <span data-ro="Online acum" data-en="Online now">Online acum</span>
     </div>
   </div>
   <div class="chat-msgs" id="chatMsgs">
-    <div class="msg bot" id="welcomeMsg">Bună ziua! 👋 Sunt asistentul dor. Vă pot ajuta să găsiți produse românești sau să aflați mai multe. Cum vă pot ajuta?</div>
+    <div class="msg bot" id="welcomeMsg">Bună ziua și bine ați venit! 👋 Cu ce vă pot ajuta?</div>
+  </div>
+  <div class="quick-btns" id="quickBtns">
+    <button class="qbtn" onclick="quickSend('Unde se află magazinul?')">📍 Adresă</button>
+    <button class="qbtn" onclick="quickSend('Care este programul magazinului?')">🕐 Program</button>
+    <button class="qbtn" onclick="quickSend('Ce produse aveți?')">🛒 Produse</button>
+    <button class="qbtn" onclick="quickSend('Cum pot să vă contactez?')">📞 Contact</button>
   </div>
   <div class="chat-foot">
     <input class="chat-inp" id="chatInp" type="text" placeholder="Scrieți un mesaj..." onkeydown="if(event.key==='Enter') sendMsg()">
@@ -503,8 +515,8 @@ footer { background: var(--white); color: var(--black); padding: 3rem 3rem 0; bo
 <script>
 let lang='ro', chatOpen=false, history=[];
 const sys={
-  ro:`Ești asistentul virtual al magazinului dor. — de gusturile românești. Vindem produse tradiționale românești 100% autentice, direct de la fermieri. Categorii: Cămară (86), Lactate & Ouă (41), Carne & Pește (42), Ceai (26), Condimente (54), Dulciuri (31), Panificație (42), Sucuri & Siropuri (48), Produse Apicole (28), Băuturi Alcoolice, Apă, Legume, Fructe, Vegane, Suplimente, Igienă, Cosmetice. Site: dordegusturi.ro. Magazin fizic: Brașov, Bulevardul Calea București 54. Răspunzi în română sau engleză după cum scrie clientul. Ești cald, prietenos, pasionat de produsele românești. Max 3-4 propoziții.`,
-  en:`You are the virtual assistant of dor. — de gusturile românești (Romanian flavors). We sell 100% authentic traditional Romanian products directly from local farmers. Categories: Pantry (86), Dairy & Eggs (41), Meat & Fish (42), Tea (26), Spices (54), Sweets (31), Bakery (42), Juices & Syrups (48), Bee Products (28), Drinks, Water, Vegetables, Fruits, Vegan, Supplements, Hygiene, Cosmetics. Website: dordegusturi.ro. Physical store: Brașov, Bulevardul Calea București 54. Reply in the customer's language. Warm, friendly, passionate about Romanian food. Max 3-4 sentences.`
+  ro:`Ești asistentul DOR. — magazin cu produse tradiționale românești 100% autentice, direct de la fermieri. Adresă: Calea București 54, Brașov. Program: Luni-Sâmbătă 9:00-19:00, Duminică 10:00-16:00. Tel: 0768 100 600. Email: contact.unirea@gmail.com. Site: dordegusturi.ro. Categorii: Cămară, Lactate & Ouă, Carne & Pește, Ceai, Condimente, Dulciuri, Panificație, Sucuri & Siropuri, Produse Apicole, Băuturi Alcoolice, Legume, Fructe, Vegane, Suplimente, Igienă, Cosmetice. Răspunzi în română sau engleză după cum scrie clientul. Ești scurt, cald și direct. MAX 2 propoziții per răspuns.`,
+  en:`You are the DOR. assistant — a store with 100% authentic traditional Romanian products from local farmers. Address: Calea București 54, Brașov. Hours: Mon-Sat 9:00-19:00, Sun 10:00-16:00. Phone: 0768 100 600. Email: contact.unirea@gmail.com. Website: dordegusturi.ro. Categories: Pantry, Dairy & Eggs, Meat & Fish, Tea, Spices, Sweets, Bakery, Juices, Bee Products, Drinks, Vegetables, Fruits, Vegan, Supplements, Hygiene, Cosmetics. Reply in the customer's language. Be short, warm and direct. MAX 2 sentences per reply.`
 };
 function setLang(l){
   lang=l;
@@ -514,12 +526,21 @@ function setLang(l){
   document.getElementById('searchInput').placeholder=l==='ro'?'Căutați produse...':'Search products...';
   document.getElementById('chatInp').placeholder=l==='ro'?'Scrieți un mesaj...':'Type a message...';
   const wm=document.getElementById('welcomeMsg');
-  if(wm)wm.textContent=l==='ro'?"Bună ziua! 👋 Sunt asistentul dor. Vă pot ajuta să găsiți produse românești. Cum vă pot ajuta?":"Hello! 👋 I'm the dor. assistant. I can help you find Romanian products. How can I help?";
+  if(wm)wm.textContent=l==='ro'?'Bună ziua și bine ați venit! 👋 Cu ce vă pot ajuta?':'Hello! 👋 How can I help you?';
+  const qb=document.querySelectorAll('.qbtn');
+  const labels=l==='ro'?['📍 Adresă','🕐 Program','🛒 Produse','📞 Contact']:['📍 Address','🕐 Hours','🛒 Products','📞 Contact'];
+  const msgs=l==='ro'?['Unde se află magazinul?','Care este programul magazinului?','Ce produse aveți?','Cum pot să vă contactez?']:['Where is the store?','What are your opening hours?','What products do you have?','How can I contact you?'];
+  qb.forEach((b,i)=>{b.textContent=labels[i];b.onclick=()=>quickSend(msgs[i]);});
 }
 function toggleChat(){
   chatOpen=!chatOpen;
   document.getElementById('chatWin').classList.toggle('open',chatOpen);
   document.getElementById('chatBtn').textContent=chatOpen?'✕':'💬';
+}
+function quickSend(txt){
+  document.getElementById('quickBtns').style.display='none';
+  document.getElementById('chatInp').value=txt;
+  sendMsg();
 }
 async function sendMsg(){
   const inp=document.getElementById('chatInp');
@@ -529,7 +550,7 @@ async function sendMsg(){
   dot.innerHTML='<span></span><span></span><span></span>';
   document.getElementById('chatMsgs').appendChild(dot);scrollMsgs();
   try{
-    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys[lang],messages:history})});
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,system:sys[lang],messages:history})});
     const data=await res.json();const reply=data.content[0].text;
     history.push({role:'assistant',content:reply});
     document.getElementById('dots')?.remove();addMsg(reply,'bot');
